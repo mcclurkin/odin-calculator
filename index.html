@@ -9,12 +9,12 @@
 <body>
     <div class="container">
         <div class="disp-area">
-            <p>123456789123</p>
+            <p></p>
         </div>
         <div class="buttons">
             <div class="row">
                 <button id="all-clear">AC</button>
-                <button></button>
+                <button id="backspace">&larr;</button>
                 <button></button>
                 <button class="operators" id="divide">&div;</button>
             </div>
@@ -24,10 +24,217 @@
                 <button class="numbers" id="nine">9</button>
                 <button class="operators" id="multiply">&times;</button>
             </div>
-
+            <div class="row">
+                <button class="numbers" id="four">4</button>
+                <button class="numbers" id="five">5</button>
+                <button class="numbers" id="six">6</button>
+                <button class="operators" id="minus">&minus;</button>
             </div>
+            <div class="row">
+                <button class="numbers" id="one">1</button>
+                <button class="numbers" id="two">2</button>
+                <button class="numbers" id="three">3</button>
+                <button class="operators" id="plus">&plus;</button>
+            </div>
+            <div class="row">
+                <button class="numbers" id="zero">0</button>
+                <button></button>
+                <button class="numbers" id="decimal">.</button>
+                <button class="operators" id="equals">&equals;</button>
+            </div>
+
         </div>
     </div>
-    
+    <script>
+        const buttons = document.querySelector('.buttons');
+        const display = document.querySelector('.disp-area p')
+        let i = 0;
+        let numbers = ['',''];
+        let operator = '';
+        let result = '';
+        function operate(operator, a, b){
+            switch (operator) {
+                case 'plus':
+                    return plus(a,b);
+                case 'minus':
+                    return minus(a,b);
+                case 'multiply':
+                    return multiply(a,b);
+                case 'divide':
+                    return divide(a,b);
+            }
+        }
+        function plus(a,b){
+            let result;
+            a = parseFloat(a);
+            b = parseFloat(b);
+            result = a+b;
+            if (Number.isInteger(result)) {
+                return String(result);
+            } else {
+                return String(result.toPrecision(4));
+            }
+        }
+        function minus(a,b){
+            let result;
+            a = parseFloat(a);
+            b = parseFloat(b);
+            result = a-b;
+            if (Number.isInteger(result)) {
+                return String(result);
+            } else {
+                return String(result.toPrecision(4));
+            }
+        }
+        function multiply(a,b){
+            let result;
+            a = parseFloat(a);
+            b = parseFloat(b);
+            result = a*b;
+            if (Number.isInteger(result)) {
+                return String(result);
+            } else {
+                return String(result.toPrecision(4));
+            }
+        }
+        function divide(a,b){
+            let result;
+            a = parseFloat(a);
+            b = parseFloat(b);
+            result = a/b;
+            if (Number.isInteger(result)) {
+                return String(result);
+            } else {
+                return String(parseFloat(result.toPrecision(4)));
+            }
+        }
+        buttons.addEventListener('click', event => {
+            let target = event.target;
+            switch(target.id) {
+                case 'zero':
+                    if (!operator && !numbers[i]) {
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='0'
+                    break;
+                case 'one':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='1'
+                    break;
+                case 'two':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='2'
+                    break;
+                case 'three':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='3'
+                    break;
+                case 'four':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='4'
+                    break;
+                case 'five':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='5'
+                    break;
+                case 'six':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='6'
+                    break;
+                case 'seven':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='7'
+                    break;
+                case 'eight':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='8'
+                    break;
+                case 'nine':
+                    if (!operator && !numbers[i]){
+                        numbers = ['',''];
+                        i = 0;
+                    }
+                    numbers[i]+='9'
+                    break;
+                case 'plus':
+                    // first check if there is already two numbers in the array
+                    if (i == 1 && operator){
+                        result = operate(operator, ...numbers);
+                    }
+                    operator = 'plus';
+                    i = (i+1) % 2;
+                    break;     
+                case 'minus':
+                    // first check if there is already two numbers in the array
+                    if (i == 1 && operator){
+                        result = operate(operator, ...numbers);
+                    }
+                    operator = 'minus';
+                    i = (i+1) % 2;
+                    break;     
+                case 'multiply':
+                    // first check if there is already two numbers in the array
+                    if (i == 1 && operator){
+                        result = operate(operator, ...numbers);
+                    }
+                    operator = 'multiply';
+                    i = (i+1) % 2;
+                    break;     
+                case 'divide':
+                    // first check if there is already two numbers in the array
+                    if (i == 1 && operator){
+                        result = operate(operator, ...numbers);
+                    }
+                    operator = 'divide';
+                    i = (i+1) % 2;
+                    break;     
+                case 'equals':
+                    // first check if there is already two numbers in the array
+                    if (i == 1){
+                        result = operate(operator, ...numbers);
+                        operator = '';
+                        i = (i+1) % 2;
+                    } else {
+                        result = '';
+                        operator = '';
+                    }
+                    break;     
+            }
+            if (result) {
+                display.textContent = result;
+                numbers = ['',''];
+                numbers[i] = String(result);
+                result = '';
+                if(operator) i = (i+1) % 2;
+            } else if (numbers[i]) {
+                display.textContent = numbers[i];
+            }
+        })
+    </script>
 </body>
 </html>
