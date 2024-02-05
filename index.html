@@ -47,7 +47,12 @@
     </div>
     <script>
         const buttons = document.querySelector('.buttons');
-        const display = document.querySelector('.disp-area p')
+        const allButtons = buttons.querySelectorAll('button');
+        const plus_button = document.querySelector('#plus');
+        const minus_button = document.querySelector('#minus');
+        const multiply_button = document.querySelector('#multiply');
+        const divide_button = document.querySelector('#divide');
+        const display = document.querySelector('.disp-area p');
         let i = 0;
         let numbers = ['',''];
         let operator = '';
@@ -99,6 +104,9 @@
         }
         function divide(a,b){
             let result;
+            if (b==0){
+                return "Snarky Error!!";
+            }
             a = parseFloat(a);
             b = parseFloat(b);
             result = a/b;
@@ -130,7 +138,7 @@
                         numbers = ['',''];
                         i = 0;
                     }
-                    numbers[i]+='2'
+                    numbers[i]+='2';
                     break;
                 case 'three':
                     if (!operator && !numbers[i]){
@@ -187,6 +195,7 @@
                         result = operate(operator, ...numbers);
                     }
                     operator = 'plus';
+                    plus_button.classList.add("active");
                     i = (i+1) % 2;
                     break;     
                 case 'minus':
@@ -195,6 +204,7 @@
                         result = operate(operator, ...numbers);
                     }
                     operator = 'minus';
+                    minus_button.classList.add("active");
                     i = (i+1) % 2;
                     break;     
                 case 'multiply':
@@ -203,6 +213,7 @@
                         result = operate(operator, ...numbers);
                     }
                     operator = 'multiply';
+                    multiply_button.classList.add("active");
                     i = (i+1) % 2;
                     break;     
                 case 'divide':
@@ -211,6 +222,7 @@
                         result = operate(operator, ...numbers);
                     }
                     operator = 'divide';
+                    divide_button.classList.add("active");
                     i = (i+1) % 2;
                     break;     
                 case 'equals':
@@ -223,15 +235,27 @@
                         result = '';
                         operator = '';
                     }
+                    break;
+                case 'all-clear':
+                    numbers = ['',''];
+                    result = '';
+                    operator = '';
+                    display.textContent = '';
+                    break;
+                case 'backspace':
+                    numbers[i] = numbers[i].substring(0, numbers[i].length-1);
                     break;     
             }
             if (result) {
                 display.textContent = result;
                 numbers = ['',''];
-                numbers[i] = String(result);
+                if (result != "Snarky Error!!"){
+                    numbers[i] = String(result);
+                }
                 result = '';
                 if(operator) i = (i+1) % 2;
             } else if (numbers[i]) {
+                allButtons.forEach(el => el.classList.remove('active'));
                 display.textContent = numbers[i];
             }
         })
